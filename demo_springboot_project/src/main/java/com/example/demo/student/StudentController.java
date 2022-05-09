@@ -2,12 +2,10 @@ package com.example.demo.student;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/student")
@@ -29,7 +27,22 @@ public class StudentController {
 	public void registerNewStudent(@RequestBody Student student) {
 		studentService.addNewStudent(student); 
 	}
+
+	@RequestMapping(path = "{studentId}")
+		public void deleteStudent(@PathVariable("studentId") Long studentId) {
+		studentService.deleteStudent(studentId);
+		}
+
+	@PutMapping(path = "{studentId}")
+	public void updateStudent(@PathVariable("studentId") Long studentId,
+							  @RequestParam(required = false) String name,
+							  @RequestParam(required = false) String email) {
+		studentService.updateStudent(studentId,name,email);
+	}
+
+
+
+	}
 	
 
 
-}
